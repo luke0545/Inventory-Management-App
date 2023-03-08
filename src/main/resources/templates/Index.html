@@ -1,0 +1,238 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layouts/defaultTemplate">
+  <head>
+  	<title>Home</title>
+  </head>
+  
+  <body>
+  	<div layout:fragment="content">
+  	
+  		<div th:if="${param.login}" >
+  			<div class="alert alert-primary alert-dismissible fade show" role="alert">Login Successful: Welcome, <img sec:authentication="name"/>
+  			</div>
+  		</div>
+  		<div th:if="${param.logout}" >
+  			<div class="alert alert-primary alert-dismissible fade show" role="alert">Logout Successful: Goodbye!
+  			</div>
+  		</div>
+  		
+		<div class="text-center">
+		    <br /><h1 class="display-4">Welcome</h1><br />
+		    
+		</div>
+	
+		<div class="text-body">
+		    <p style="font-size:18px">
+		
+		        This is Inventory, A webapp designed by Luke Walder and Michal Uchmanowicz for CST 339 at Grand Canyon University.<br />
+		
+		    </p>
+		    <br />
+		
+		    <table class="table">
+		        <thead class="thead-dark">
+		            <tr>
+		                <th scope="col">Sprint #</th>
+		                <th scope="col">Task  #</th>
+		                <th scope="col">Task Description</th>
+		                <th scope="col">Completed?</th>
+		
+		            </tr>
+		        </thead>
+		        <tbody>
+		        	<tr style="background-color:lightgray">
+		                <th scope="row"></th>
+		                <td colspan="3"></td>
+		            </tr>
+		            <tr>
+		                <th scope="row">Sprint 1</th>
+		                <td>Task 1</td>
+		                <td>Created Home, Login, and Registration Controller</td>
+		                <td>YES</td>
+		            </tr>
+		            <tr>
+		                <th scope="row">Sprint 1</th>
+		                <td>Task 2</td>
+		                <td>Created Login Model and User Model.</td>
+		                <td>YES</td>
+		            </tr>
+		            <tr>
+		                <th scope="row">Sprint 1</th>
+		                <td>Task 3</td>
+		                <td>Created Index view, Login view, Login Success view, Login Failure view, Registration view, and Registration Success view.</td>
+		                <td>YES</td>
+		            </tr>
+		            <tr style="background-color:lightgray">
+		                <th scope="row"></th>
+		                <td colspan="3"></td>
+		            </tr>
+		            <tr >
+		                <th scope="row">Sprint 2</th>
+		                <td>Task 1</td>
+		                <td>Created Product Controller</td>
+		                <td>YES</td>
+		            </tr>
+		            <tr >
+		                <th scope="row">Sprint 2</th>
+		                <td>Task 2</td>
+		                <td>Created Product Model</td>
+		                <td>YES</td>
+		            </tr>
+		            <tr>
+		                <th scope="row">Sprint 2</th>
+		                <td>Task 3</td>
+		                <td>Created Polymorphic submodels of Product (Weapon, Armor, Health)</td>
+		                <td>YES</td>
+		            </tr>
+		            <tr>
+		                <th scope="row">Sprint 2</th>
+		                <td>Task 4</td>
+		                <td>Created SpringConfig</td>
+		                <td>YES</td>
+		            </tr>
+		             <tr>
+		                <th scope="row">Sprint 2</th>
+		                <td>Task 5</td>
+		                <td>Created BusinessServiceInterface and BusinessService</td>
+		                <td>YES</td>
+		            </tr>
+		            <tr style="background-color:lightgray">
+		                <th scope="row"></th>
+		                <td colspan="3"></td>
+		            </tr>
+		            <tr>
+		                <th scope="row">Sprint 3</th>
+		                <td>Task 1</td>
+		                <td>Create Login Access Interface </td>
+		                <td>YES</td>
+		            </tr>
+		            <tr>
+		                <th scope="row">Sprint 3</th>
+		                <td>Task 2</td>
+		                <td>Create LoginDAO </td>
+		                <td>YES</td>
+		            </tr>
+		            <tr>
+		                <th scope="row">Sprint 3</th>
+		                <td>Task 3</td>
+		                <td>Create Register access interface</td>
+		                <td>YES</td>
+		            </tr>
+		            <tr>
+		                <th scope="row">Sprint 3</th>
+		                <td>Task 4</td>
+		                <td>Create RegisterDAO </td>
+		                <td>YES</td>
+		            </tr>
+		            <tr>
+		                <th scope="row">Sprint 3</th>
+		                <td>Task 5</td>
+		                <td>Create ProductAccessInterface </td>
+		                <td>YES</td>
+		            </tr>
+		            <tr>
+		                <th scope="row">Sprint 3</th>
+		                <td>Task 6</td>
+		                <td>Create productDAO</td>
+		                <td>YES</td>
+		            </tr>
+		            <tr>
+		                <th scope="row">Sprint 3</th>
+		                <td>Task 7</td>
+		                <td>Updated all Controllers and Views to work with DAOs</td>
+		                <td>YES</td>
+		            </tr>
+		            <tr style="background-color:lightgray">
+		                <th scope="row"></th>
+		                <td colspan="3"></td>
+		            </tr>
+		            <tr>
+		                <th scope="row">Sprint 4</th>
+		                <td>Task 1</td>
+		                <td>Created Edit Modal and functionality </td>
+		                <td>YES</td>
+		            </tr>
+		            <tr>
+		                <th scope="row">Sprint 4</th>
+		                <td>Task 2</td>
+		                <td>Created Delete Modal and functionality </td>
+		                <td>YES</td>
+		            </tr>
+					<tr>
+		                <th scope="row">Sprint 4</th>
+		                <td>Task 2</td>
+		                <td>Added 'add' functionality</td>
+		                <td>YES</td>
+		            </tr>
+					<tr style="background-color:lightgray">
+		                <th scope="row"></th>
+		                <td colspan="3"></td>
+		            </tr>
+					<tr>
+		                <th scope="row">Sprint 5</th>
+		                <td>Task 1</td>
+		                <td>Added SecurityConfig & Added Spring Security</td>
+		                <td>YES</td>
+		            </tr>
+					<tr>
+		                <th scope="row">Sprint 5</th>
+		                <td>Task 2</td>
+		                <td>Added RegisterDAO class</td>
+		                <td>YES</td>
+		            </tr>
+					<tr>
+		                <th scope="row">Sprint 5</th>
+		                <td>Task 3</td>
+		                <td>Refactored Login Controller</td>
+		                <td>YES</td>
+		            </tr>
+					<tr style="background-color:lightgray">
+		                <th scope="row"></th>
+		                <td colspan="3"></td>
+		            </tr>
+					<tr>
+		                <th scope="row">Sprint 6</th>
+		                <td>Task 1</td>
+		                <td>Added REST service to support returning of products in the form of JSON</td>
+		                <td>YES</td>
+		            </tr>
+					<tr>
+		                <th scope="row">Sprint 6</th>
+		                <td>Task 2</td>
+		                <td>Secured API REST Service</td>
+		                <td>YES</td>
+		            </tr>
+					<tr style="background-color:lightgray">
+		                <th scope="row"></th>
+		                <td colspan="3"></td>
+		            </tr>
+		            <tr>
+		                <th scope="row">Sprint 7</th>
+		                <td>Task 1</td>
+		                <td>Added Friend model</td>
+		                <td>YES</td>
+		            </tr>
+		            <tr>
+		                <th scope="row">Sprint 7</th>
+		                <td>Task 2</td>
+		                <td>Added Friends view</td>
+		                <td>YES</td>
+		            </tr>
+					<tr>
+		                <th scope="row">Sprint 7</th>
+		                <td>Task 3</td>
+		                <td>Added FriendController, FriendBusinessService, and FriendDAO</td>
+		                <td>YES</td>
+		            </tr>
+		            <tr>
+		                <th scope="row">Sprint 7</th>
+		                <td>Task 4</td>
+		                <td>User can now add, and remove friends.</td>
+		                <td>YES</td>
+		            </tr>
+		        </tbody>
+		    </table>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layouts/defaultTemplate">
+  <head>
+  	<title>Friends</title>
+  	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+  </head>
+  
+  <body>
+  	<div layout:fragment="content">
+		<div  th:if="${success != null}">
+			<div class="alert alert-success alert-dismissible fade show" role="alert"><img th:text=${success}>
+			</div>
+		</div>
+		<div th:if="${friendError != null}" >
+			<div class="alert alert-danger alert-dismissible fade show" role="alert"><img th:text=${friendError}>
+			</div>
+		</div>
+
+          <div class="container">
+			<h4>Add Friend</h4>
+            <div class="row">
+				
+				<!--Add Friend Button-->
+				<form action="#" th:action="@{addFriend}" method="post">
+					<table>
+						<tbody>
+							<tr>
+								<td><label for="friendUsername"></label><br></td>
+								<td><input type="text" id="fname" placeholder="Username" name="friendUsername" value=""><br></td>
+								<input type="hidden" value="5" name="identity" id="send-req-username">
+								<td><button type="submit" id="add-friend-btn" class="btn btn-success btn-sm" style="width: auto;" data-toggle="modal" data-target="#purchaseModal">Add Friend</button></td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+					
+		    </div>
+		    <div class="row">
+		    	<h4 style="text-align: left;">Incoming Requests</h4>
+				<!-- Pending Requests table-->
+				<table style="border: 1px solid black;">
+					<thead>
+						<tr style="background-color:lightgray">
+							<th style="text-align:left;width:25%;">Username</th>
+							<th style="text-align:left;width:25%;">Status</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="friend : ${friends}" th:if="${friend.requested == true && friend.accepted == false && friend.friend_username == username }">
+							<td style="text-align:left;width:25%;"><h5 id="current-friend-request" th:text="${friend.user_username}"></h5></td>
+							<td style="text-align:left;width:25%;"><h5>Request Pending</h5></td>
+							
+							<td style="width:10%;" sec:authorize="hasAuthority('ROLE_USER')">
+								<form action="#" th:action="@{acceptRequest}" method="post">
+									<input type="hidden" th:value="${friend.user_username}" name="friendUsername" id="send-accept-friend-request">
+									<button type="submit" id="accept-req-btn" class="btn btn-success btn-sm">Accept Request</button>
+								</form>
+							</td>
+							
+							<td style="width:10%;" sec:authorize="hasAuthority('ROLE_USER')">
+								<form action="#" th:action="@{removeRequest}" method="post">
+									<input type="hidden" th:value="${friend.user_username}" name="friendUsername" id="send-del-friend-request">
+									<button type="submit" id="del-req-btn" class="btn btn-danger btn-sm">Deny Request</button>
+								</form>
+							</td>
+							
+						</tr>
+					</tbody>
+				</table>
+		    </div>
+		    <br><hr><br>
+		    <div class="row">
+		    	<h4 style="text-align: left;">Outgoing Requests</h4>
+				<!-- Pending Requests table-->
+				<table style="border: 1px solid black;">
+					<thead>
+						<tr style="background-color:lightgray">
+							<th style="text-align:left;width:25%;">Username</th>
+							<th style="text-align:left;width:25%;">Status</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="friend : ${friends}" th:if="${friend.requested == true && friend.accepted == false && friend.user_username == username }">
+							<td style="text-align:left;width:25%;"><h5 id="current-friend-request" th:text="${friend.friend_username}"></h5></td>
+							<td style="text-align:left;width:25%;"><h5>Request Pending</h5></td>
+						</tr>
+					</tbody>
+				</table>
+		    </div>
+		    <br><hr><br>
+		    <div class="row">
+		    	<h4 style="text-align: left;">Friends</h4>
+				<!--Current Friends table-->
+				<table style="border: 1px solid black;">
+					<thead>
+						<tr style="background-color:lightgray">
+							<th style="text-align:left;width:25%;">Username</th>
+							<th style="text-align:left;width:25%;">Status</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="friend : ${friends}" th:if="${(friend.accepted == true && friend.user_username == username) || (friend.accepted == true && friend.friend_username == username)}">
+							<span th:if="${friend.user_username == username}">
+								<td style="text-align:left;width:25%;"><h5 id="current-friend-username" th:text="${friend.friend_username}"></h5></td>
+							</span>
+							<span th:if="${friend.friend_username == username}">
+								<td style="text-align:left;width:25%;"><h5 id="current-friend-username" th:text="${friend.user_username}"></h5></td>
+							</span>
+							<td style="text-align:left;width:25%;"><h5>Friends</h5></td>
+							<!-- Remove Friend Button -->
+							<td style="width:10%;" sec:authorize="hasAuthority('ROLE_USER')">
+								<form action="#" th:action="@{removeFriend}" method="post">
+									
+									<span th:if="${friend.user_username == username}">
+										<input type="hidden" th:value="${friend.friend_username}" name="friendUsername" id="send-del-friend-username">
+									</span>
+									<span th:if="${friend.friend_username == username}">
+										<input type="hidden" th:value="${friend.user_username}" name="friendUsername" id="send-del-friend-username">
+									</span>
+									
+									<button type="submit" id="del-btn" class="btn btn-danger btn-sm">Remove Friend</button>
+								</form>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+		    </div>
+          </div>
+	</div>
+  </body>
+</html>

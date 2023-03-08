@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layouts/defaultTemplate">
+  <head>
+  	<title>Register</title>
+  </head>
+  
+  <body>
+  	<div layout:fragment="content">
+  		
+  		<div th:if="${UserCreationResponse != null}" >
+	  		<div class="alert alert-danger alert-dismissible fade show" role="alert" th:text=${UserCreationResponse}>
+	  		</div>
+	  	</div>
+	  	
+  		<br><h2>Register a User</h2><br>
+
+		<form action="#" th:action="@{doRegister}" th:object="${userModel}" method="post">
+			<table>
+                <tr>
+					<td><input type="text" th:field="*{fName}" class="form-control" placeholder="First Name"></td>
+				</tr>
+				<tr>
+					<td> <h8 style="color:red" th:if="${#fields.hasErrors('fName')}" th:errors="*{fName}">First name</h8></td>
+				</tr>
+				<tr>
+					<td><input type="text" th:field="*{lName}" class="form-control" placeholder="Last Name"></td>
+				</tr>
+				<tr>
+					<td><h8 style="color:red" th:if="${#fields.hasErrors('lName')}" th:errors="*{lName}">Last Name</h5></td> 
+				</tr>
+				
+	                <tr>
+						<td><input th:object="${loginModel}" required minlength="1" maxlength="32" type="text" th:field="*{username}" class="form-control" placeholder="Username"></td>
+					</tr>
+					<tr>
+						<td><h8 style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">User Name</h8></td>
+					</tr>
+					<tr>
+						<td><h8 th:if="${UserInUse == true}" style="color:red">Username is already in use</h8></td>
+					</tr>
+					
+					<tr>
+						<td><input th:object="${loginModel}" required minlength="1" maxlength="32" type="text" th:field="*{password}" class="form-control" placeholder="Password"></td>
+					</tr>
+					<tr>
+						<td> <h8 style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password</h8></td> 
+					<tr>
+				
+                <tr>
+					<td><input type="text" th:field="*{email}" class="form-control" placeholder="Email"></td>
+				</tr>
+				<tr>
+					<td> <h8 style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email</h5></td>
+				</tr>
+				<tr>
+					<td><input type="text" th:field="*{phoneNumber}" class="form-control" placeholder="PhoneNumber"></td>
+				</tr>
+				<tr>
+					<td> <h8 style="color:red" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">)Phone Number</h8></td> 
+				</tr>
+					<td><br></td>
+				<tr>
+					<td colspan="2"><input type="submit" value="Submit" class="btn btn-primary"></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+  </body>
+</html>

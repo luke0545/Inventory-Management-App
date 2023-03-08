@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layouts/defaultTemplate">
+<head>
+  	<title>Home</title>
+</head>
+
+ <body>
+	<div layout:fragment="content">
+	
+		<div th:if="${UserCreationResponse != null}" >
+  			<div class="alert alert-success alert-dismissible fade show" role="alert" th:text=${UserCreationResponse}>
+  			</div>
+  		</div>
+  		
+		<h1>Thank you for creating an account, <img class="display-4" th:text="${userModel.getUsername()}"></h1>
+	</div>
+</body>
+</html>

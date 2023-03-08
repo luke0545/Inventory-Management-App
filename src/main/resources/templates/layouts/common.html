@@ -1,0 +1,293 @@
+<div th:fragment="header" class="header">
+
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		
+		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<li><a class="nav-item nav-link active" th:href="@{/}">Home</a></li>
+				<li><a class="nav-item nav-link" th:href="@{/products/}" sec:authorize="isAuthenticated()">Products Store</a></li>
+				<li><a class="nav-item nav-link" th:href="@{/myProducts/}" sec:authorize="hasAuthority('ROLE_USER')">My Products</a></li>
+				<li><a class="nav-item nav-link" th:href="@{/friends/}" sec:authorize="hasAuthority('ROLE_USER')">My Friends</a></li>
+			</ul>
+			
+			<div class="nvcenter">
+				<div sec:authorize="!isAuthenticated()">
+					<b>Not currently logged in</b>
+				</div>
+		
+				<div sec:authorize="isAuthenticated()">
+					<b>Logged in As:</b> <i><img sec:authentication="name"/></i>
+					<b>Roles: </b><i><img sec:authentication="principal.authorities"></i>
+				</div>
+			</div>
+			
+			<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+				<li sec:authorize="!isAuthenticated()"><a class="nav-item nav-link" th:href="@{/register/}">Register</a></li>
+		      	<li sec:authorize="!isAuthenticated()"><a class="nav-item nav-link" th:href="@{/login}">Login</a></li>
+		      	
+				<li sec:authorize="isAuthenticated()"><a class="nav-item nav-link" th:href="@{/logout}">Logout</a></li>
+    		</ul>
+    		
+		</div>
+	</nav>
+</div>
+
+<div th:fragment="addModal">
+	<div class="modal fade" id="addModal" role="dialog">
+	    <div class="modal-dialog">
+	    
+	      <!-- Modal content-->
+	      <div class="modal-content">
+	        <div class="modal-header" style="text-align:center;justify-content: center;align-items: center;">
+	          <h4 class="modal-title" >Add Product</h4>
+	        </div>
+	        <br>
+				<form action="#" th:action="@{addProduct}" th:object="${productModel}" method="post">
+                    <table class="add-new-product-form">
+                    
+                        <tr>
+                            <td>Name: </td>
+                            <td><input type="text" th:field="*{name}" class="form-control" placeholder="Name"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><h8 style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></h8></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>Description: </td>
+                            <td><input type="text" th:field="*{description}" class="form-control" placeholder="Description"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><h8 style="color:red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></h8></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>Value: </td>
+                            <td><input type="number" th:field="*{value}" class="form-control" placeholder="Attack/Defense/Health Value"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><h8 style="color:red" th:if="${#fields.hasErrors('value')}" th:errors="*{value}"></h8></td>
+                        </tr>
+                        <tr>
+                            <td>Price: </td>
+                            <td><input type="number" th:field="*{price}" class="form-control" placeholder="Price"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><h8 style="color:red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></h8></td>
+                        </tr>
+                        <tr>
+                            <td>Quantity: </td>
+                            <td><input type="number" th:field="*{quantity}" class="form-control" placeholder="Quantity"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><h8 style="color:red" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></h8></td>
+                        </tr>
+                        <tr>
+	                        <td><br></td>
+                        </tr>
+                        <tr>
+                        	<td>Item Type:  </td>
+                        	<td>
+	                        	<select id="type" required th:field="*{type}" class="form-control" style="width:100%; text-align: center;">
+	                        		<option value="" hidden>Select an Option</option>
+									<option value="Weapon">Weapon</option>
+									<option value="Armor">Armor</option>
+									<option value="Health">Health</option>
+						        </select>
+					     	</td>
+                        </tr>
+                        				           
+					    <tr>
+                        	<td><br></td>
+                        </tr>
+
+                    </table>
+		        <div class="modal-footer">
+		       	 	<p style="text-align:left;color:lightgray;">Please Click outside of Modal to Exit</p>	
+		        	<!--  <button type="button" class="btn btn-outline-default btn-sm" data-dismiss="modal">Nevermind</button>-->
+		        	<input type="submit" value="Add" class="btn btn-primary">
+		        </div>
+	        </form>
+	      </div>
+	      
+		</div>
+	</div>
+</div>
+
+<div th:fragment="editModal">
+		<!-- Edit Modal -->
+	<div class="modal fade" id="editModal" role="dialog">
+		<div class="modal-dialog">
+		
+		<!-- Modal content-->
+		<div class="modal-content" >
+			<div class="modal-header" style="text-align:center;justify-content: center;align-items: center;">
+			<h4 class="modal-title">Edit Product</h4>
+		</div>
+		<br>
+					<form action="#" th:action="@{editProduct}" th:object="${productModel}" method="post">
+						<table class="edit-product-form" >
+							
+							<tr>
+								<td>ID: </td>
+								<td><input disabled value="5" id="send-edit-id" th:field="*{id}" class="form-control" ></td>
+							</tr>
+							<tr>
+								<td>Name: </td>
+								<td><input type="text" th:field="*{name}" class="form-control" ></td>
+							</tr>
+							<tr>
+								<td colspan="2"><h8 style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></h8></td>
+							</tr>
+							
+							<tr>
+								<td>Description: </td>
+								<td><input type="text" th:field="*{description}" class="form-control" ></td>
+							</tr>
+							<tr>
+								<td colspan="2"><h8 style="color:red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></h8></td>
+							</tr>
+							
+							<tr>
+								<td>Value: </td>
+								<td><input type="number" th:field="*{value}" class="form-control" ></td>
+							</tr>
+							<tr>
+								<td colspan="2"><h8 style="color:red" th:if="${#fields.hasErrors('value')}" th:errors="*{value}"></h8></td>
+							</tr>
+							<tr>
+								<td>Price: </td>
+								<td><input type="number" th:field="*{price}" class="form-control" ></td>
+							</tr>
+							<tr>
+								<td colspan="2"><h8 style="color:red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></h8></td>
+							</tr>
+							<tr>
+								<td>Quantity: </td>
+								<td><input type="number" th:field="*{quantity}" class="form-control" ></td>
+							</tr>
+							<tr>
+								<td colspan="2"><h8 style="color:red" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></h8></td>
+							</tr>												   
+							<tr>
+								<td><br></td>
+							</tr>
+							 <tr>
+                        	<td>Item Type:  </td>
+                        	<td>
+	                        	<select id="type" required th:field="*{type}" class="form-control" style="width:100%; text-align: center;">
+	                        		<option value="" hidden>Select an Option</option>
+									<option value="Weapon">Weapon</option>
+									<option value="Armor">Armor</option>
+									<option value="Health">Health</option>
+						        </select>
+					     	</td>
+                        </tr>
+
+						</table>
+				<div class="modal-footer">
+					<p style="text-align:left;color:lightgray;">Please Click outside of Modal to Exit</p>	
+					<!--  <button type="button" class="btn btn-outline-default btn-sm" data-dismiss="modal">Nevermind</button>-->
+					<input type="hidden" value="5" name="identity" id="send-edit-id">
+					<input type="submit" value="Edit" class="btn btn-primary" id="edit-btn-two">
+				</div>
+			</form>
+		</div>
+		
+		</div>
+	</div>
+</div>
+
+<div th:fragment="purchaseModal">
+	<!-- Purchase Modal -->
+<div class="modal fade" id="purchaseModal" role="dialog">
+	<div class="modal-dialog">
+	
+	<!-- Modal content-->
+	<div class="modal-content" >
+		<span class="close-modal-btn">&times;</span>
+		<div class="modal-header" style="text-align:center;justify-content: center;align-items: center;">
+			<h4 class="modal-title">Purchase Product</h4>
+			
+		</div>
+	<br>
+		<form action="#" th:action="@{purchaseProduct}" th:object="${productModel}" method="post">
+			<table class="edit-product-form" >
+				
+				<tr>
+					<td>ID: </td>
+					<td><input disabled value="5" id="send-purchase-id" th:field="*{id}" class="form-control" ></td>
+				</tr>
+				<tr>
+					<td> Quantity:</td>
+					<td><input disabled value="1" class="form-control" ></td>
+				</tr>
+								   
+			</table>
+			<div class="modal-footer">
+				<p style="text-align:left;color:lightgray;">Click outside of Modal to Exit </p>	
+				<!--  <button type="button" class="btn btn-outline-default btn-sm" data-dismiss="modal">Nevermind</button>-->
+				<input type="hidden" value="5" name="identity" id="send-purchase-id">
+				<input type="submit" value="Purchase" class="btn btn-primary" id="edit-btn-two">
+			</div>
+		</form>
+	</div>
+	
+	</div>
+</div>
+</div>
+
+
+<div th:fragment="delModal">
+	<!-- Delete Modal -->
+	<div class="modal fade" id="delModal" role="dialog">
+	    <div class="modal-dialog">
+	    
+	      <!-- Modal content-->
+	      <div class="modal-content">
+	        <div class="modal-header" style="text-align:center;justify-content: center;align-items: center;">
+	          <h4 class="modal-title">Delete Product</h4>
+	        </div>
+	        <div class="modal-body">
+	          <h4>Are you sure you want to delete ID:? <input disabled value="5" id="delId"></h4>
+	        </div>
+	        <div class="modal-footer">
+	        	<p style="text-align:left;color:lightgray;">Please Click outside of Modal to Exit</p>	
+	          <!--  <button type="button" class="btn btn-outline-default btn-sm" data-dismiss="modal">Nevermind</button>-->
+	          	<form action="#" th:action ="@{/products/delProduct}" method="post">
+					<input type="hidden" id="delId" name="identity">
+					<input type="submit" Value="Delete" class="btn btn-danger btn-sm">
+				</form>
+	        </div>
+	      </div>
+	      
+		</div>
+	</div>
+</div>
+
+<div th:fragment="userProdDelModal">
+	<!-- Delete Modal -->
+	<div class="modal fade" id="userProdDelModal" role="dialog">
+	    <div class="modal-dialog">
+	    
+	      <!-- Modal content-->
+	      <div class="modal-content">
+	        <div class="modal-header" style="text-align:center;justify-content: center;align-items: center;">
+	          <h4 class="modal-title">Delete Product</h4>
+	        </div>
+	        <div class="modal-body">
+	          <h4>Are you sure you want to delete ID:? <input disabled value="5" id="delbyUserId"></h4>
+	        </div>
+	        <div class="modal-footer">
+	        	<p style="text-align:left;color:lightgray;">Please Click outside of Modal to Exit</p>	
+	          <!--  <button type="button" class="btn btn-outline-default btn-sm" data-dismiss="modal">Nevermind</button>-->
+	          	<form action="#" th:action ="@{/myProducts/delProduct}" method="post">
+					<input type="hidden" id="delbyUserId" name="identity">
+					<input type="submit" Value="Delete" class="btn btn-danger btn-sm">
+				</form>
+	        </div>
+	      </div>
+	      
+		</div>
+	</div>
+</div>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layouts/defaultTemplate">
+  <head>
+  	<title>Login</title>
+  </head>
+  
+  <body>
+  	<div layout:fragment="content">
+  	
+  		<div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+			Invalid username and/or password.
+		</div>
+		
+		<br><h3>Please Log In</h3><br>
+		
+		
+		
+		<form method="post">
+			<table>
+				<tr>
+					<td><input type="text" name="username" class="form-control" placeholder="Username"></td>
+				</tr>
+				
+				<tr>
+					<td><input type="password" name="password" class="form-control" placeholder="Password"></td>
+				</tr>
+				
+				<tr>
+				<td><br></td>
+				</tr>
+				<tr>
+					<td colspan="3"><input type="submit" value="Submit" class="btn btn-primary"></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+  </body>
+</html>
